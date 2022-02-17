@@ -32,6 +32,7 @@ const (
 	udpHeader         = "UDP"
 	multiHopHeader    = "MultiHop"
 	freeHeader        = "Free"
+	premiumHeader     = "Premium"
 	streamHeader      = "Stream"
 	portForwardHeader = "Port forwarding"
 )
@@ -68,6 +69,8 @@ func (s *Server) ToMarkdown(headers ...string) (markdown string) {
 			fields[i] = boolToMarkdown(s.MultiHop)
 		case freeHeader:
 			fields[i] = boolToMarkdown(s.Free)
+		case premiumHeader:
+			fields[i] = boolToMarkdown(s.Premium)
 		case streamHeader:
 			fields[i] = boolToMarkdown(s.Stream)
 		case portForwardHeader:
@@ -127,6 +130,8 @@ func getMarkdownHeaders(vpnProvider string) (headers []string) {
 		return []string{regionHeader, countryHeader, cityHeader, hostnameHeader, multiHopHeader, tcpHeader, udpHeader}
 	case providers.Torguard:
 		return []string{countryHeader, cityHeader, hostnameHeader, tcpHeader, udpHeader}
+	case providers.VPNSecure:
+		return []string{regionHeader, cityHeader, hostnameHeader, premiumHeader}
 	case providers.VPNUnlimited:
 		return []string{countryHeader, cityHeader, hostnameHeader, freeHeader, streamHeader, tcpHeader, udpHeader}
 	case providers.Vyprvpn:

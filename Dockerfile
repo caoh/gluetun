@@ -105,6 +105,8 @@ ENV VPN_SERVICE_PROVIDER=pia \
     FREE_ONLY= \
     # # Surfshark only:
     MULTIHOP_ONLY= \
+    # # VPN Secure only:
+    PREMIUM_ONLY= \
     # Firewall
     FIREWALL=on \
     FIREWALL_VPN_INPUT_PORTS= \

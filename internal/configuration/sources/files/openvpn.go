@@ -11,6 +11,7 @@ const (
 	OpenVPNClientKeyPath = "/gluetun/client.key"
 	// OpenVPNClientCertificatePath is the OpenVPN client certificate filepath.
 	OpenVPNClientCertificatePath = "/gluetun/client.crt"
+	openVPNEncryptedPrivateKey   = "/gluetun/encrypted-private-key"
 )
 
 func (r *Reader) readOpenVPN() (settings settings.OpenVPN, err error) {
@@ -22,6 +23,11 @@ func (r *Reader) readOpenVPN() (settings settings.OpenVPN, err error) {
 	settings.ClientCrt, err = ReadFromFile(OpenVPNClientCertificatePath)
 	if err != nil {
 		return settings, fmt.Errorf("client certificate: %w", err)
+	}
+
+	settings.EncryptedPrivateKey, err = ReadFromFile(openVPNEncryptedPrivateKey)
+	if err != nil {
+		return settings, fmt.Errorf("cannot read client encrypted private key: %w", err)
 	}
 
 	return settings, nil

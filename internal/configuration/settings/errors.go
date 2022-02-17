@@ -15,6 +15,7 @@ var (
 	ErrNameNotValid                    = errors.New("the server name specified is not valid")
 	ErrOpenVPNClientKeyMissing         = errors.New("client key is missing")
 	ErrOpenVPNCustomPortNotAllowed     = errors.New("custom endpoint port is not allowed")
+	ErrOpenVPNEncPrivateKeyMissing     = errors.New("client encrypted private key is missing")
 	ErrOpenVPNEncryptionPresetNotValid = errors.New("PIA encryption preset is not valid")
 	ErrOpenVPNInterfaceNotValid        = errors.New("interface name is not valid")
 	ErrOpenVPNMSSFixIsTooHigh          = errors.New("mssfix option value is too high")

@@ -185,6 +185,12 @@ func OpenVPNConfig(provider OpenVPNProviderSettings,
 		lines.addLines(WrapOpenvpnTLSCrypt(provider.TLSCrypt))
 	}
 
+	if *settings.EncryptedPrivateKey != "" {
+		keyData, err := parse.ExtractEncryptedPrivateKey([]byte(*settings.EncryptedPrivateKey))
+		panicOnError(err, "cannot extract client encrypted private key")
+		lines.addLines(WrapOpenvpnEncryptedKey(keyData))
+	}
+
 	if *settings.ClientCrt != "" {
 		certData, err := extract.PEM([]byte(*settings.ClientCrt))
 		panicOnError(err, "cannot extract client crt")
@@ -287,6 +293,16 @@ func WrapOpenvpnKey(clientKey string) (lines []string) {
 		"-----BEGIN PRIVATE KEY-----",
 		clientKey,
 		"-----END PRIVATE KEY-----",
+		"</key>",
+	}
+}
+
+func WrapOpenvpnEncryptedKey(encryptedKey string) (lines []string) {
+	return []string{
+		"<key>",
+		"-----BEGIN ENCRYPTED PRIVATE KEY-----",
+		encryptedKey,
+		"-----END ENCRYPTED PRIVATE KEY-----",
 		"</key>",
 	}
 }

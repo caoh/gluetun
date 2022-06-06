@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"reflect"
+	"sort"
 
 	"github.com/qdm12/gluetun/internal/constants/providers"
 )
@@ -148,8 +149,22 @@ func (a *AllServers) Count() (count int) {
 	return count
 }
 
+var _ sort.Interface = (*Servers)(nil)
+
 type Servers struct {
 	Version   uint16   `json:"version"`
 	Timestamp int64    `json:"timestamp"`
 	Servers   []Server `json:"servers,omitempty"`
+}
+
+func (s *Servers) Len() int {
+	return len(s.Servers)
+}
+
+func (s *Servers) Swap(i, j int) {
+	s.Servers[i], s.Servers[j] = s.Servers[j], s.Servers[i]
+}
+
+func (s *Servers) Less(i, j int) bool {
+	return false
 }

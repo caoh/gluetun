@@ -30,6 +30,7 @@ type PortForward interface {
 type OpenVPN interface {
 	WriteConfig(lines []string) error
 	WriteAuthFile(user, password string) error
+	WriteAskPassFile(passphrase string) error
 }
 
 type Providers interface {

@@ -190,8 +190,9 @@ func OpenVPNConfig(provider OpenVPNProviderSettings,
 	}
 
 	if *settings.EncryptedPrivateKey != "" {
-		keyData, err := parse.ExtractEncryptedPrivateKey([]byte(*settings.EncryptedPrivateKey))
-		panicOnError(err, "cannot extract client encrypted private key")
+		lines.add("askpass", openvpn.AskPassPath)
+		keyData, err := extract.PEM([]byte(*settings.EncryptedPrivateKey))
+		panicOnError(err, "cannot extract PEM of encrypted private key")
 		lines.addLines(WrapOpenvpnEncryptedKey(keyData))
 	}
 

@@ -23,7 +23,6 @@ type OpenVPNProviderSettings struct {
 	RSAKey        string
 	TLSAuth       string
 	TLSCrypt      string
-	DHParameters  string
 	MssFix        uint16
 	FastIO        bool
 	AuthUserPass  bool
@@ -185,9 +184,6 @@ func OpenVPNConfig(provider OpenVPNProviderSettings,
 	if provider.TLSCrypt != "" {
 		lines.addLines(WrapOpenvpnTLSCrypt(provider.TLSCrypt))
 	}
-	if provider.DHParameters != "" {
-		lines.addLines(WrapOpenvpnDHParameters(provider.DHParameters))
-	}
 
 	if *settings.EncryptedPrivateKey != "" {
 		lines.add("askpass", openvpn.AskPassPath)
@@ -339,15 +335,5 @@ func WrapOpenvpnTLSCrypt(staticKeyV1 string) (lines []string) {
 		staticKeyV1,
 		"-----END OpenVPN Static key V1-----",
 		"</tls-crypt>",
-	}
-}
-
-func WrapOpenvpnDHParameters(dhParameters string) (lines []string) {
-	return []string{
-		"<dh>",
-		"-----BEGIN DH PARAMETERS-----",
-		dhParameters,
-		"-----END DH PARAMETERS-----",
-		"</dh>",
 	}
 }
